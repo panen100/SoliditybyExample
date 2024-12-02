@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.7;
+pragma solidity ^0.8.26;
 
 contract RedPacket{
     bool internal immutable rType;
     uint8 internal rCount;
     uint256 internal immutable rAmount;
-    address internal immutable owner;
+    address payable internal immutable owner;
     mapping(address => bool) internal hasAttend;
     LuckyGuy[] internal LuckyGuyDetails;
 
@@ -23,7 +23,12 @@ contract RedPacket{
         rType = _Avg;
         rCount = _rCount;
         rAmount = _rAmount;
-        owner = msg.sender;
+        owner = payable(msg.sender);
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner,"only owner can do this operation");
+        _;
     }
 
     function getBalance() public view returns(uint256) {
@@ -85,6 +90,10 @@ contract RedPacket{
 
     function getRedPacketDetail() external view returns(LuckyGuy[] memory) {
         return LuckyGuyDetails;
+    }
+
+    function killConstract() external onlyOwner {
+        selfdestruct(owner);
     }
 }
 
