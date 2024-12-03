@@ -17,10 +17,12 @@ contract GuessGame{
         uint amount;
     }
 
+    event OpenResult(address _addr,uint _amount);
+
     constructor(uint _minAmount) {
         owner = msg.sender;
         startTime = block.timestamp;
-        endTime = startTime + 120;
+        endTime = startTime + 60;
         minAmount = _minAmount;
     }
 
@@ -58,15 +60,25 @@ contract GuessGame{
 
         if(random_num <= 9){
             for(uint i = 0;i < smalls.length;i++){
-                uint bonus = smalls[i].amount + (smalls[i].amount * bigTotalAmount * 90/ smallTotalAmount * 100);
+                uint bonus = smalls[i].amount + ((smalls[i].amount * bigTotalAmount * 9) / (smallTotalAmount * 10));
+                uint ServiceFee = (smalls[i].amount * bigTotalAmount) / (smallTotalAmount * 10);
+
                 payable(smalls[i].addr).transfer(bonus);
-                payable(owner).transfer(smalls[i].amount * bigTotalAmount * 10/ smallTotalAmount * 100);
+                emit OpenResult(smalls[i].addr,bonus);
+
+                payable(owner).transfer(ServiceFee);
+                emit OpenResult(owner,ServiceFee);
             }
         }else {
            for(uint i = 0;i < smalls.length;i++){
-                uint bonus = bigs[i].amount + (bigs[i].amount * smallTotalAmount * 90/ bigTotalAmount * 100);
+                uint bonus = bigs[i].amount + ((bigs[i].amount * smallTotalAmount * 9)/ (bigTotalAmount * 10));
+                uint ServiceFee = (smalls[i].amount * bigTotalAmount) / (smallTotalAmount * 10);
+
                 payable(bigs[i].addr).transfer(bonus);
-                payable(owner).transfer(bigs[i].amount * smallTotalAmount * 10/ bigTotalAmount * 100);
+                emit OpenResult(smalls[i].addr,bonus);
+
+                payable(owner).transfer(ServiceFee);
+                emit OpenResult(owner,ServiceFee);
             }
         } 
     }
