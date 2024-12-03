@@ -61,7 +61,7 @@ contract GuessGame{
         if(random_num <= 9){
             for(uint i = 0;i < smalls.length;i++){
                 uint bonus = smalls[i].amount + ((smalls[i].amount * bigTotalAmount * 9) / (smallTotalAmount * 10));
-                uint ServiceFee = (smalls[i].amount * bigTotalAmount) / (smallTotalAmount * 10);
+                uint ServiceFee =  bigTotalAmount / 10;
 
                 payable(smalls[i].addr).transfer(bonus);
                 emit OpenResult(smalls[i].addr,bonus);
@@ -72,7 +72,7 @@ contract GuessGame{
         }else {
            for(uint i = 0;i < smalls.length;i++){
                 uint bonus = bigs[i].amount + ((bigs[i].amount * smallTotalAmount * 9)/ (bigTotalAmount * 10));
-                uint ServiceFee = (smalls[i].amount * bigTotalAmount) / (smallTotalAmount * 10);
+                uint ServiceFee = smallTotalAmount / 10;
 
                 payable(bigs[i].addr).transfer(bonus);
                 emit OpenResult(smalls[i].addr,bonus);
