@@ -44,7 +44,6 @@ contract AirDrop{
             if(!success){
                 failTransferList[_addresses[i]] = _amounts[i];
             } 
-            //_addresses[i].transfer(_amounts[i]); 有DOS攻击风险，并且transfer也是不推荐的写法
         }
     }
 }
