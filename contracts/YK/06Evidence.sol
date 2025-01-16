@@ -22,7 +22,7 @@ contract Evidence{
         factoryAddr = _factory;
         require(callVerify(tx.origin),"signer is not valid"); //只有签名者才可以创建evidence合约
         evidence = _evi; //初始化存证的详情信息
-        signers.push(tx.origin); //签名者部署Evidence合约,代表已签名
+        signers.push(tx.origin); //签名者部署Evidence合约,代表已签名,添加到已经签过名的signer数组集合中
 
         emit NewSignatureEvidence(_evi,tx.origin);
     }
@@ -66,7 +66,7 @@ contract Evidence{
     function isAllSigned() public view returns(bool, string memory){
         uint256 iSize = Ievidence(factoryAddr).getSignerSize();
         for(uint256 i = 0;i < iSize;i++){
-            if(isSigned(Ievidence(factoryAddr).getSigner(i))){
+            if(!isSigned(Ievidence(factoryAddr).getSigner(i))){
                 return (false,"");
             }
         }  

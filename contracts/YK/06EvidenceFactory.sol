@@ -63,4 +63,9 @@ contract EvidenceFactory is Ievidence{
         address addr = evi_keys[_key];
         return Evidence(addr).sign();
     }
+
+    function isAllSigned(string memory _key) public view returns(bool,string memory){
+        address addr = evi_keys[_key];
+        return Evidence(addr).isAllSigned();
+    }
 }
