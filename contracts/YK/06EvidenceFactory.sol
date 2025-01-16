@@ -22,10 +22,9 @@ contract EvidenceFactory is Ievidence{
         for(uint256 i = 0;i < signers.length;i++){
             if(signers[i] == _signer){
                 return true;
-            }else{
-                return false;
             }
         }
+        return false;
     }
 
     //通过索引查询签名者的地址
