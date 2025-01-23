@@ -39,13 +39,13 @@ contract MarriageEvidence is Ievidence{
 
     //验证某一个用户是否是签名者，返回true或false
     function verify(address _signer) external view returns(bool){
-        _verify(_signer);
+        return _verify(_signer);
     }
 
     //验证某一个用户是否是签名者，返回true或false
     function _verify(address _signer) internal view returns(bool){
         for(uint256 i = 0;i < needSigners.length;i++){
-            if(signers[i] == _signer){
+            if(needSigners[i] == _signer){
                 return true;
             }
         }
