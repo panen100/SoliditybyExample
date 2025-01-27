@@ -18,13 +18,13 @@ contract Goods {
     constructor(uint256 _goodsID) {
         goodsID = _goodsID;
         currentStatus = STATUS_CREATE;
-        traceDatas.push(TraceData(msg.sender,STATUS_CREATE,block.timestamp,"create goods"));
+        traceDatas.push(TraceData(tx.origin,STATUS_CREATE,block.timestamp,"create goods"));
     }
 
     function changeStatus(uint8 _status,string memory _remark) public returns(bool) {
         currentStatus = _status;
-        traceDatas.push(TraceData(msg.sender,_status,block.timestamp,_remark));
-        emit NewStatus(msg.sender,_status,block.timestamp,_remark);
+        traceDatas.push(TraceData(tx.origin,_status,block.timestamp,_remark));
+        emit NewStatus(tx.origin,_status,block.timestamp,_remark);
         return true;
     }
 
